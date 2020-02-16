@@ -1,39 +1,39 @@
 <template>
     <div class="header">
-        <div class="header-container">
-            <div class="header-logo">
-                <img style="width: 230px" src="../../assets/imgs/logo.png">
-            </div>
-            <div class="header-link">
-                <ul class="items-ul">
-                    <router-link tag="li" to="/courseList" class="item-link">免费课程</router-link>
-                    <router-link tag="li" to="/courseList" class="item-link">实战课程</router-link>
-                    <router-link tag="li" to="/courseList" class="item-link">课程专栏</router-link>
-                    <router-link tag="li" to="/courseList" class="item-link">猿问猿答</router-link>
-                </ul>
-            </div>
-            <div class="header-search demo-input-suffix">
-                <el-input
-                        placeholder="请输入内容"
-                        prefix-icon="el-icon-search"
-                        >
-                </el-input>
-            </div>
-            <div class="header-signIn">
-                <div class="login-area" v-show="isLogin == false">
-                    <el-button type="text" @click="dialogVisible = true"><a>登录</a></el-button>
-                    <a>/</a>
-                    <el-button type="text" @click="dialogVisible = true"><a>注册</a></el-button>
+            <div class="header-container">
+                <div class="header-logo">
+                    <img style="width: 230px" src="../../assets/imgs/logo.png">
                 </div>
-                <div class="user-area" v-show="isLogin == true">
+                <div class="header-link">
+                    <ul class="items-ul">
+                        <router-link tag="li" to="/courseList" class="item-link">免费课程</router-link>
+                        <router-link tag="li" to="/courseList" class="item-link">实战课程</router-link>
+                        <router-link tag="li" to="/courseList" class="item-link">课程专栏</router-link>
+                        <router-link tag="li" to="/courseList" class="item-link">猿问猿答</router-link>
+                    </ul>
+                </div>
+                <div class="header-search demo-input-suffix">
+                    <el-input
+                            placeholder="请输入内容"
+                            prefix-icon="el-icon-search"
+                    >
+                    </el-input>
+                </div>
+                <div class="header-signIn">
+                    <div class="login-area" v-show="isLogin == false">
+                        <el-button type="text" @click="dialogVisible = true"><a>登录</a></el-button>
+                        <a>/</a>
+                        <el-button type="text" @click="dialogVisible = true"><a>注册</a></el-button>
+                    </div>
+                    <div class="user-area" v-show="isLogin == true">
 
+                    </div>
                 </div>
-            </div>
-            <div class="header-cart">
-                <span class="el-icon-shopping-cart-2">购物车</span>
+                <div class="header-cart">
+                    <span class="el-icon-shopping-cart-2">购物车</span>
+                </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -60,6 +60,7 @@
         margin: 0 auto;
     }
     .header-logo{
+        height: 100%;
         float: left;
     }
     .header-link{
