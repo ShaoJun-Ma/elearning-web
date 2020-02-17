@@ -50,7 +50,7 @@
 <style scoped>
     .header{
         min-width: 1400px;
-        background-color:  #d81e06;
+        background-color: #ea412b;
         height: 70px;
     }
     .header-container{
