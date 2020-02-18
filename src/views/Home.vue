@@ -13,6 +13,8 @@
                     :payCourseList="payCourseList">
             </home-list>
         </div>
+        <!-- 底部 -->
+        <home-footer></home-footer>
     </div>
 </template>
 
@@ -20,6 +22,7 @@
     import HomeHeader from "@/components/home/Header";
     import HomeSlide from "@/components/home/Slide";
     import HomeList from "@/components/home/List";
+    import HomeFooter from "@/components/home/Footer";
     export default {
         name: "Home",
         data(){
@@ -34,6 +37,7 @@
             HomeHeader,
             HomeSlide,
             HomeList,
+            HomeFooter,
         },
         methods:{
             getHomeInfo(){
