@@ -291,7 +291,7 @@
         background-color: #dddfe2;
     }
     .el-input{
-        padding:4px;
+        padding:0 !important;
     }
     .hover-area .out{
         width: 100%;

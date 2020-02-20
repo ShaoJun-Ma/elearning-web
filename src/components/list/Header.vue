@@ -146,7 +146,7 @@
     }
     .header-container{
         width: 1300px;
-        height: 40px;
+        height: 100%;
         margin: 0 auto;
     }
     .header-link{
@@ -158,11 +158,12 @@
         padding: 0;
         margin: 0;
         width: 100%;
-        height: 40px;
+        height: 100%;
         line-height: 40px;
 
     }
     .ul-items li{
+        line-height: 44px;
         margin-right: 50px;
         float: left;
         font-size: 15px;
@@ -281,7 +282,7 @@
         background-color: #dddfe2;
     }
     .el-input{
-        padding:4px;
+        padding:0 !important;
     }
     .hover-area .out{
         width: 100%;
