@@ -21,9 +21,9 @@
                 </div>
                 <div class="header-signIn">
                     <div class="login-area" v-show="isLogin == 'false'">
-                        <el-button type="text" @click="dialogVisible = true"><a>登录</a></el-button>
+                        <el-button type="text" @click="handleSignIn('login')"><a>登录</a></el-button>
                         <a>/</a>
-                        <el-button type="text" @click="dialogVisible = true"><a>注册</a></el-button>
+                        <el-button type="text" @click="handleSignIn('register')"><a>注册</a></el-button>
                     </div>
                     <div class="user-area" v-show="isLogin == 'true'">
                         <div class="face-img-area">
@@ -73,7 +73,7 @@
                     :visible.sync="dialogVisible"
                     width="550px">
                 <div>
-                    <sign-in></sign-in>
+                    <sign-in :activeName="activeName"></sign-in>
                 </div>
             </el-dialog>
         </div>
@@ -89,6 +89,7 @@
         data(){
             return{
                 dialogVisible:false,
+                activeName:"",
             }
         },
         computed:{
@@ -106,7 +107,36 @@
             }
         },
         methods:{
+            handleSignIn(activeName){
+                // console.log(sign);
+                this.dialogVisible = true;
+                this.activeName = activeName;
+            },
             logout(){
+                let data = this.$qs.stringify({
+                    uId:this.$store.state.userInfo.id,
+                });
+                this.$axios.post("/api/user/logout",data).then((result) => {
+                    result = result.data;
+                    if(result.status == 200){
+                        this.$message({
+                            message:result.message,
+                            type:"success",
+                        });
+
+                        //更改当前会话的登录状态和用户信息
+                        sessionStorage.setItem("isLogin","false");
+                        sessionStorage.removeItem("userInfo");
+
+                        this.$store.commit("changeIsLogin","false");
+                        this.$store.commit("changeUserInfo",{});
+                    }else{
+                        this.$message({
+                            message:result.message,
+                            type:"error",
+                        })
+                    }
+                });
 
             }
         }

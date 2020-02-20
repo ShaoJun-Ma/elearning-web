@@ -70,6 +70,7 @@
                 });
                 this.$axios.post("/api/user/login",data).then((result) => {
                     result = result.data;
+                    console.log(result);
                     if(result.status == 200){
                         //登录成功
                         this.$message({
