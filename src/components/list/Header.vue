@@ -1,29 +1,26 @@
 <template>
     <div class="header">
         <div class="header-container">
-            <div class="header-logo">
-                <img style="width: 230px" src="../../assets/imgs/logo.png">
-            </div>
             <div class="header-link">
-                <ul class="items-ul">
-                    <router-link tag="li" to="/course/list" class="item-link">免费课程</router-link>
-                    <router-link tag="li" to="/courseList" class="item-link">实战课程</router-link>
-                    <router-link tag="li" to="/courseList" class="item-link">课程专栏</router-link>
-                    <router-link tag="li" to="/courseList" class="item-link">猿问猿答</router-link>
+                <ul class="ul-items">
+                    <router-link tag="li" to="/white" >white首页</router-link>
+                    <router-link class="on" tag="li" to="/course/list">免费课程</router-link>
+                    <router-link tag="li" to="/white" >实战课程</router-link>
+                    <router-link tag="li" to="/white">课程专栏</router-link>>
+                    <router-link tag="li" to="/white">猿问猿答</router-link>>
                 </ul>
             </div>
             <div class="header-search demo-input-suffix">
                 <el-input
                         placeholder="请输入内容"
-                        prefix-icon="el-icon-search"
-                >
+                        prefix-icon="el-icon-search">
                 </el-input>
             </div>
             <div class="header-signIn">
                 <div class="login-area" v-show="isLogin == 'false'">
-                    <el-button type="text" @click="handleSignIn('login')"><a>登录</a></el-button>
+                    <el-button type="text" @click="handleSignIn('login')">登录</el-button>
                     <a>/</a>
-                    <el-button type="text" @click="handleSignIn('register')"><a>注册</a></el-button>
+                    <el-button type="text" @click="handleSignIn('register')">注册</el-button>
                 </div>
                 <div class="user-area" v-show="isLogin == 'true'">
                     <div class="face-img-area">
@@ -66,6 +63,7 @@
             <div class="header-cart">
                 <span class="el-icon-shopping-cart-2">购物车</span>
             </div>
+
         </div>
         <!--登录注册对话框-->
         <el-dialog
@@ -82,14 +80,14 @@
 <script>
     import SignIn from "@/views/SignIn";
     export default {
-        name: "HomeHeader",
+        name: "ListHeader",
         components:{
-            SignIn
+            SignIn,
         },
         data(){
             return{
-                dialogVisible:false,
                 activeName:"",
+                dialogVisible:false,
                 hoverArea:true,
             }
         },
@@ -135,58 +133,54 @@
                 });
 
             }
-        },
-        mounted(){
-            if(this.$store.state.isLogin == null){
-                this.$store.commit("changeIsLogin","false");
-                this.$store.commit("changeUserInfo",{});
-            }
-        },
-
-
+        }
     }
 </script>
 
 <style scoped>
     .header{
         min-width: 1400px;
-        background-color: #ea412b;
-        height: 70px;
+        height: 44px;
+        line-height: 44px;
+        background-color: black;
     }
     .header-container{
-        width: 1400px;
-        height: 70px;
-        line-height: 70px;
+        width: 1300px;
+        height: 40px;
         margin: 0 auto;
-    }
-    .header-logo{
-        height: 100%;
-        float: left;
     }
     .header-link{
         height: 100%;
+        width: 50%;
         float: left;
-        padding:0 30px;
-        box-sizing: border-box;
     }
-    .header-link .items-ul{
+    .ul-items{
         padding: 0;
         margin: 0;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+
     }
-    .items-ul .item-link{
-        cursor: pointer;
-        padding: 0 15px;
+    .ul-items li{
+        margin-right: 50px;
         float: left;
-        list-style-type: none;
+        font-size: 15px;
+        color: gray;
+        cursor: pointer;
     }
-    .item-link:hover{
+    .ul-items li:hover{
         color: white;
-        font-weight: bold;
+    }
+    .ul-items .on{
+        color: white;
     }
     .header-search{
+        width: 307px;
         float: left;
-        width: 300px;
-        padding:0 20px;
+    }
+    .header-search >>> .el-input{
+        padding: 0 !important;
     }
     .header-cart{
         float: right;
@@ -195,22 +189,24 @@
         text-align: center;
         margin-left: 30px;
         cursor: pointer;
+        color: gray;
     }
     .header-cart:hover{
         color: white;
     }
     .header-signIn{
+        color: white;
         float: right;
         padding:0 20px;
         cursor: pointer;
     }
     .login-area >>> .el-button--text{
-        color: black;
+        color: white;
         font-size: 16px;
         padding: 0 10px;
     }
     .login-area >>> .el-button--text:hover{
-        color: white;
+        color: red;
     }
     .el-dialog__wrapper >>> .el-dialog__body{
         padding: 10px 0 0 0 !important;
@@ -218,7 +214,6 @@
     .face-img-area{
         height: 40px;
         width: 40px;
-        margin:15px 10px;
         float:left;
         border-radius: 50%;
     }
@@ -228,10 +223,8 @@
     .hover-area{
         width:226px;
         height: 204px;
-        /*border:1px solid red*/
     }
     .face-img-button{
-        /*background: green;*/
         width: 100%;
         height: 100%;
         border-radius: 50%;
@@ -252,7 +245,6 @@
         width: 70px;
         height: 100%;
         float: left;
-        /*border: 1px solid black;*/
     }
     .username-role .name{
         margin-top: 35px;
@@ -265,7 +257,6 @@
     .my-area{
         width: 100%;
         height: 50px;
-        /*border: 1px solid rebeccapurple;*/
     }
     .my-area ul{
         width: 100%;
@@ -279,7 +270,6 @@
         height: 36px;
         line-height: 36px;
         text-align: center;
-        /*border: 1px solid pink;*/
         float: left;
         margin: 6px 16px;
         list-style-type: none;
@@ -306,11 +296,14 @@
         margin:0 17px;
     }
     .logout{
+        margin-left: 20px;
         float: right;
     }
     .logout:hover{
         cursor: pointer;
-        color: white;
-        font-weight: bold;
+        color: red;
+    }
+    .el-dialog__wrapper >>> .el-dialog__header{
+        line-height: 22px !important;
     }
 </style>
