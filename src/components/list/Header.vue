@@ -3,7 +3,7 @@
         <div class="header-container">
             <div class="header-link">
                 <ul class="ul-items">
-                    <router-link tag="li" to="/white" >white首页</router-link>
+                    <router-link tag="li" to="/" >white首页</router-link>
                     <router-link class="on" tag="li" to="/course/list">免费课程</router-link>
                     <router-link tag="li" to="/white" >实战课程</router-link>
                     <router-link tag="li" to="/white">课程专栏</router-link>>
@@ -158,7 +158,7 @@
         padding: 0;
         margin: 0;
         width: 100%;
-        height: 100%;
+        height:100%;
         line-height: 40px;
 
     }
