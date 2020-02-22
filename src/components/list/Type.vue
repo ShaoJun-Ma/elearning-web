@@ -1,6 +1,6 @@
 <template>
     <div class="type">
-        <div class="top">
+        <div class="type-container">
             <div class="type-search">
                 <div class="logo">
                     <img class="logo-img" src="../../assets/imgs//player.png">
@@ -8,8 +8,8 @@
                 </div>
                 <div class="demo-input-suffix search">
                     <el-input
-                        placeholder="请输入内容"
-                        prefix-icon="el-icon-search">
+                            placeholder="请输入内容"
+                            prefix-icon="el-icon-search">
                     </el-input>
                 </div>
             </div>
@@ -17,9 +17,9 @@
             <div class="course-direction">
                 <span class="classify">方向：</span>
                 <ul class="type-ul">
-                    <li class="type-item on">全部</li>
-                    <div v-for="item in parentCourseTypeList" :key="item.id">
-                        <li class="type-item">{{item.name}}</li>
+                    <li class="type-item" :class="{on:-1 == parentType_index}" @click="changeParentTypeIndex(-1)">全部</li>
+                    <div v-for="(item,index) of parentCourseTypeList" :key="item.id">
+                        <li class="type-item" :class="{on:index == parentType_index}" @click="changeParentTypeIndex(index)">{{item.name}}</li>
                     </div>
                 </ul>
             </div>
@@ -27,22 +27,25 @@
             <div class="course-type">
                 <span class="classify">分类：</span>
                 <ul class="type-ul">
-                    <li  class="type-item on">全部</li>
-                    <div v-for="item in childCourseTypeList" :key="item.id">
-                        <li class="type-item">{{item.name}}</li>
-                  </div>
+                    <li  class="type-item" :class="{on:-1 == childType_index}" @click="changeChildTypeIndex(-1)">全部</li>
+                    <div v-for="(item,index) of childCourseTypeList" :key="item.id">
+                        <li class="type-item" :class="{on:index == childType_index}" @click="changeChildTypeIndex(index)">{{item.name}}</li>
+                    </div>
                 </ul>
+                <!--消除浮动-->
+                <div class="clear"></div>
             </div>
             <!--难度-->
             <div class="course-rank">
                 <span class="classify">难度：</span>
                 <ul class="type-ul">
-                    <div v-for="(r_item,index) in rankList" :key="index">
-                        <li class="type-item" :class="{on:index==rank_index}" @click="changeRank(index)">{{r_item}}</li>
+                    <div v-for="(item,index) of rankList" :key="index">
+                        <li class="type-item" :class="{on:index==rank_index}" @click="changeRank(index)">{{item}}</li>
                     </div>
                 </ul>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -56,7 +59,20 @@
         data(){
             return{
                 rankList:["全部","初级","中级","高级"],
+                parentType_index:-1,
+                childType_index:-1,
                 rank_index:0,
+            }
+        },
+        methods:{
+            changeParentTypeIndex(index){
+                this.parentType_index = index;
+            },
+            changeChildTypeIndex(index){
+                this.childType_index = index;
+            },
+            changeRank(index){
+                this.rank_index = index;
             }
         }
     }
@@ -64,15 +80,13 @@
 
 <style scoped>
     .type{
-        width: 100%;
-        height: 448px;
+        min-width: 1400px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
     }
-    .top{
+    .type-container{
         width: 1200px;
-        height: 448px;
         margin: auto;
-
+        padding-bottom: 40px;
     }
     .type-search{
         width: 100%;
@@ -127,7 +141,7 @@
     }
     .course-type{
         width: 100%;
-        height: 194px;
+        /*height: 194px;*/
         border-bottom:1px solid rgba(29, 33, 35, 0.2);
     }
 
@@ -141,6 +155,9 @@
         border-radius: 6px;
         font-weight: 700;
         color: red;
+    }
+    .clear{
+        clear: both;
     }
 
 </style>

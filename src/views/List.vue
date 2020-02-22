@@ -1,11 +1,12 @@
 <template>
     <div>
         <list-header></list-header>
+        <list-type
+                :parentCourseTypeList="parentCourseTypeList"
+                :childCourseTypeList="childCourseTypeList">
+        </list-type>
         <div class="list-container">
-            <list-type
-                    :parentCourseTypeList="parentCourseTypeList"
-                    :childCourseTypeList="childCourseTypeList">
-            </list-type>
+
         </div>
     </div>
 </template>
