@@ -133,6 +133,11 @@
                 });
 
             }
+        },
+        mounted(){
+            if(this.$store.state.isLogin == null){
+                this.$store.state.isLogin = "false";
+            }
         }
     }
 </script>
