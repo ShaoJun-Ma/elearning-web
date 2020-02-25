@@ -18,8 +18,8 @@
                 <span class="classify">方向：</span>
                 <ul class="type-ul">
                     <li class="type-item" :class="{on:-1 == parentType_index}" @click="changeParentTypeIndex(-1)">全部</li>
-                    <div v-for="(item,index) of parentCourseTypeList" :key="item.id">
-                        <li class="type-item" :class="{on:index == parentType_index}" @click="changeParentTypeIndex(index)">{{item.name}}</li>
+                    <div v-for="(p_item,index) of courseTypeList" :key="p_item.id">
+                        <li class="type-item" :class="{on:index == parentType_index}" @click="changeParentTypeIndex(index)">{{p_item.name}}</li>
                     </div>
                 </ul>
             </div>
@@ -28,8 +28,8 @@
                 <span class="classify">分类：</span>
                 <ul class="type-ul">
                     <li  class="type-item" :class="{on:-1 == childType_index}" @click="changeChildTypeIndex(-1)">全部</li>
-                    <div v-for="(item,index) of childCourseTypeList" :key="item.id">
-                        <li class="type-item" :class="{on:index == childType_index}" @click="changeChildTypeIndex(index)">{{item.name}}</li>
+                    <div v-for="(c_item,index) of childTypeList" :key="c_item.id">
+                        <li class="type-item" :class="{on:index == childType_index}" @click="changeChildTypeIndex(index)">{{c_item.name}}</li>
                     </div>
                 </ul>
                 <!--消除浮动-->
@@ -53,26 +53,85 @@
     export default {
         name: "ListType",
         props:{
-            parentCourseTypeList:Array,
-            childCourseTypeList:Array,
+            courseTypeList:Array
         },
         data(){
             return{
                 rankList:["全部","初级","中级","高级"],
                 parentType_index:-1,
                 childType_index:-1,
-                rank_index:0,
+                rank_index:0
             }
         },
         methods:{
+            //方向
             changeParentTypeIndex(index){
                 this.parentType_index = index;
+                this.childType_index = -1;
+                this.rank_index = 0;
+                this.getCourse();
             },
+            //分类
             changeChildTypeIndex(index){
                 this.childType_index = index;
+                if(this.childType_index != -1){
+                    this.getParentAndChildType();
+                }
+                this.getCourse();
             },
+            //难度
             changeRank(index){
                 this.rank_index = index;
+                this.getCourse();
+            },
+            //获取父类型和子类型
+            getParentAndChildType(){
+                let cid = this.childType_index == -1?0:(this.childTypeList[this.childType_index]).id;
+                let data = this.$qs.stringify({
+                    cid:cid,
+                });
+                this.$axios.post("/api/course/getParentAndChildType",data).then((result) => {
+                    result = result.data;
+                    console.log(result);
+                    this.parentType_index = result.result.id - 1;
+                    this.$emit("changeChildType",result.result.childCourseType);
+                })
+            },
+            //获取课程列表
+            getCourse(){
+                let pid = this.parentType_index == -1?0:(this.courseTypeList[this.parentType_index]).id;
+                let cid = this.childType_index == -1?0:(this.childTypeList[this.childType_index]).id;
+                let data = this.$qs.stringify({
+                    pid:pid,
+                    cid:cid,
+                    rank: this.rankList[this.rank_index],
+                    isFree:1,
+                });
+                this.$axios.post("/api/course/getCourseByPidAndCidAndRank",data).then((result) => {
+                    result = result.data;
+                    // console.log(result);
+                    if(result.status == 200){
+                        this.$emit("changeCourse", result.result);
+                    }
+                })
+            },
+        },
+        computed:{
+            //计算子类型
+            childTypeList() {
+                let childTypeList = [];
+                //1、父类型：全部
+                if(this.parentType_index == -1){
+                    for(let p_item of this.courseTypeList){
+                        for(let c_item of p_item.childCourseType){
+                            childTypeList.push(c_item);
+                        }
+                    }
+                }else{
+                    //2、父类型：具体
+                    childTypeList = this.courseTypeList[this.parentType_index].childCourseType;
+                }
+                return childTypeList;
             }
         }
     }

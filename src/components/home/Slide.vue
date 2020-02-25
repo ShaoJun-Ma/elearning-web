@@ -93,6 +93,7 @@
         border-bottom-left-radius:15px;
     }
     .el-menu--collapse .el-submenu{
+        width: 100%;
         height: 55.6px;
     }
     .parent-type-item:hover{
@@ -131,6 +132,7 @@
         border-top-right-radius:15px;
         border-bottom-right-radius:15px;
     }
+
 </style>
 
 <style>
