@@ -3,11 +3,16 @@
         <list-header></list-header>
         <list-type
                 :courseTypeList="courseTypeList"
-                @changeChildType="changeChildType"
-                @changeCourse="changeCourse">
+                ref="listType">
         </list-type>
         <div class="list-container">
-            <list-course :courseList="courseList"></list-course>
+            <list-course
+                    :courseList="courseList"
+                    :currentPage="currentPage"
+                    :pageSize="pageSize"
+                    :total="total"
+                    @handleCurrentPageClick="handleCurrentPageClick">
+            </list-course>
         </div>
     </div>
 </template>
@@ -27,27 +32,66 @@
             return{
                 courseTypeList:[],
                 courseList:[],
+                courseResult:{},
+                //当前页码
+                currentPage:1,
+                //每页几条
+                pageSize:2,
+                //总条数
+                total:0,
             }
         },
         methods:{
+            //获取父组件List的数据
             getListInfo(){
                 let data = this.$qs.stringify({
-                   isFree:1,
+                    isFree:1,
+                    currentPage:this.currentPage,
+                    pageSize:this.pageSize,
                 });
                 this.$axios.post("/api/course/getListInfo",data).then((result) => {
                     result = result.data;
                     console.log(result);
+                    data = result.result;
                     if(result.status == 200){
-                        this.courseTypeList = result.result.courseTypeList;
-                        this.courseList = result.result.courseList;
+                        this.courseTypeList = data.courseTypeList;
+                        this.courseList = data.courseList.list;
+                        this.currentPage = data.courseList.pageNum;
+                        this.total = data.courseList.total;
                     }
                 })
             },
-            changeChildType(data){
-                this.childCourseTypeList = data;
+            //获取课程列表
+            getCourse(){
+                //父组件从子组件Type中获取数据
+                let direction_index =  this.$refs.listType.direction_index;
+                let type_index = this.$refs.listType.type_index;
+                let rankList = this.$refs.listType.rankList;
+                let rank_index = this.$refs.listType.rank_index;
+
+                let pid = direction_index == -1?0:direction_index;
+                let cid = type_index == -1?0:type_index;
+                let rank = rankList[rank_index];
+
+                let data = this.$qs.stringify({
+                    pid:pid,
+                    cid:cid,
+                    rank:rank,
+                    isFree:1,
+                    currentPage:this.currentPage,
+                    pageSize:this.pageSize,
+                });
+                this.$axios.post("/api/course/getCourse",data).then((result) => {
+                    result = result.data;
+                    console.log(result);
+                    this.courseList = result.result.list;
+                    this.total = result.result.total;
+                })
             },
-            changeCourse(data){
-                this.courseList = data;
+            //改变页码
+            handleCurrentPageClick(data){
+                this.currentPage = data;
+                this.getCourse();
             }
         },
         mounted(){
@@ -60,7 +104,6 @@
     .list-container{
         width: 1200px;
         margin: 0 auto;
-        padding-bottom: 30px;
-        border: 1px solid red;
+        padding-bottom: 100px;
     }
 </style>

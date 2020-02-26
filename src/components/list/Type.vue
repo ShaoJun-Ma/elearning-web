@@ -17,9 +17,9 @@
             <div class="course-direction">
                 <span class="classify">方向：</span>
                 <ul class="type-ul">
-                    <li class="type-item" :class="{on:-1 == parentType_index}" @click="changeParentTypeIndex(-1)">全部</li>
-                    <div v-for="(p_item,index) of courseTypeList" :key="p_item.id">
-                        <li class="type-item" :class="{on:index == parentType_index}" @click="changeParentTypeIndex(index)">{{p_item.name}}</li>
+                    <li class="type-item" :class="{on:-1 == direction_index}" @click="handleDirectionClick(-1)">全部</li>
+                    <div v-for="item of courseTypeList" :key="item.id">
+                        <li class="type-item" :class="{on:item.id == direction_index}" @click="handleDirectionClick(item.id)">{{item.name}}</li>
                     </div>
                 </ul>
             </div>
@@ -27,9 +27,9 @@
             <div class="course-type">
                 <span class="classify">分类：</span>
                 <ul class="type-ul">
-                    <li  class="type-item" :class="{on:-1 == childType_index}" @click="changeChildTypeIndex(-1)">全部</li>
-                    <div v-for="(c_item,index) of childTypeList" :key="c_item.id">
-                        <li class="type-item" :class="{on:index == childType_index}" @click="changeChildTypeIndex(index)">{{c_item.name}}</li>
+                    <li  class="type-item" :class="{on:-1 == type_index}" @click="handleTypeClick(-1)">全部</li>
+                    <div v-for="item of childTypeList" :key="item.id">
+                        <li class="type-item" :class="{on:item.id == type_index}" @click="handleTypeClick(item.id)">{{item.name}}</li>
                     </div>
                 </ul>
                 <!--消除浮动-->
@@ -40,7 +40,7 @@
                 <span class="classify">难度：</span>
                 <ul class="type-ul">
                     <div v-for="(item,index) of rankList" :key="index">
-                        <li class="type-item" :class="{on:index==rank_index}" @click="changeRank(index)">{{item}}</li>
+                        <li class="type-item" :class="{on:index==rank_index}" @click="handleRankClick(index)">{{item}}</li>
                     </div>
                 </ul>
             </div>
@@ -58,78 +58,68 @@
         data(){
             return{
                 rankList:["全部","初级","中级","高级"],
-                parentType_index:-1,
-                childType_index:-1,
+                //方向（点击哪一个，就亮灯）
+                direction_index:-1,
+                //分类
+                type_index:-1,
+                //难度
                 rank_index:0
             }
         },
         methods:{
-            //方向
-            changeParentTypeIndex(index){
-                this.parentType_index = index;
-                this.childType_index = -1;
+            //点击方向触发事件
+            handleDirectionClick(index){
+                this.direction_index = index;
+                this.type_index = -1;
                 this.rank_index = 0;
-                this.getCourse();
+                //子组件获取父组件的方法
+                this.$parent.getCourse();
             },
-            //分类
-            changeChildTypeIndex(index){
-                this.childType_index = index;
-                if(this.childType_index != -1){
-                    this.getParentAndChildType();
+            //点击分类
+            handleTypeClick(index){
+                this.type_index = index;
+                if(this.type_index != -1){
+                    //改变方向
+                    this.updateDirection();
                 }
-                this.getCourse();
+                this.$parent.getCourse();
             },
-            //难度
-            changeRank(index){
+            //点击难度
+            handleRankClick(index){
                 this.rank_index = index;
-                this.getCourse();
+                this.$parent.getCourse();
             },
-            //获取父类型和子类型
-            getParentAndChildType(){
-                let cid = this.childType_index == -1?0:(this.childTypeList[this.childType_index]).id;
+            //改变方向
+            updateDirection(){
                 let data = this.$qs.stringify({
-                    cid:cid,
+                    cid:this.type_index,
                 });
-                this.$axios.post("/api/course/getParentAndChildType",data).then((result) => {
+                //获取分类对应的方向
+                this.$axios.post("/api/course/getParentType",data).then((result) => {
                     result = result.data;
                     console.log(result);
-                    this.parentType_index = result.result.id - 1;
-                    this.$emit("changeChildType",result.result.childCourseType);
-                })
-            },
-            //获取课程列表
-            getCourse(){
-                let pid = this.parentType_index == -1?0:(this.courseTypeList[this.parentType_index]).id;
-                let cid = this.childType_index == -1?0:(this.childTypeList[this.childType_index]).id;
-                let data = this.$qs.stringify({
-                    pid:pid,
-                    cid:cid,
-                    rank: this.rankList[this.rank_index],
-                    isFree:1,
-                });
-                this.$axios.post("/api/course/getCourseByPidAndCidAndRank",data).then((result) => {
-                    result = result.data;
-                    // console.log(result);
-                    if(result.status == 200){
-                        this.$emit("changeCourse", result.result);
-                    }
+                    this.direction_index = result.result.parentId;
                 })
             },
         },
         computed:{
-            //计算子类型
             childTypeList() {
                 let childTypeList = [];
-                //1、父类型：全部
-                if(this.parentType_index == -1){
+                //方向是全部，获取所有分类
+                if(this.direction_index == -1){
                     for(let p_item of this.courseTypeList){
                         for(let c_item of p_item.childCourseType){
                             childTypeList.push(c_item);
                         }
                     }
                 }else{
-                    //2、父类型：具体
-                    childTypeList = this.courseTypeList[this.parentType_index].childCourseType;
+                    //方向是具体，获取该方向下的分类
+                    // console.log(this.courseTypeList);
+                    for(let c of this.courseTypeList){
+                        if(c.id == this.direction_index){
+                            childTypeList = c.childCourseType;
+                        }
+                    }
                 }
                 return childTypeList;
             }

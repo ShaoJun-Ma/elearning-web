@@ -1,45 +1,71 @@
 <template>
-    <div class="course">
-        <div class="course-item" v-for="item of courseList" :key="item.id">
-            <div class="course-item-img">
-                <img class="course-img" :src="item.course.coverImg">
-                <a class="course-type">{{item.courseTypeName}}</a>
+    <div>
+        <div class="course">
+            <div class="course-item" v-for="item of courseList" :key="item.id">
+                <div class="course-item-img">
+                    <img class="course-img" :src="item.course.coverImg">
+                    <a class="course-type">{{item.courseTypeName}}</a>
+                </div>
+                <div class="course-item-desc">
+                    <router-link class="course-name" to="" tag="span">
+                        {{item.course.name}}
+                    </router-link>
+                    <p class="course-row">
+                        <span class="rank">{{item.course.rank}}</span>
+                        <span class="learn-counts el-icon-user">{{item.course.learnCounts}}</span>
+                    </p>
+                    <span class="description">{{item.course.description}}</span>
+                    <p class="course-item-bottom">
+                        <span class="free">免费</span>
+                    </p>
+                </div>
             </div>
-            <div class="course-item-desc">
-                 <router-link class="course-name" to="" tag="span">
-                    {{item.course.name}}
-                 </router-link>
-                <p class="course-row">
-                    <span class="rank">{{item.course.rank}}</span>
-                    <span class="learn-counts el-icon-user">{{item.course.learnCounts}}</span>
-                </p>
-                <span class="description">{{item.course.description}}</span>
-                <p class="course-item-bottom">
-                    <span class="free">免费</span>
-                </p>
-            </div>
+            <div class="clear"></div>
         </div>
-        <div class="clear"></div>
+        <!--分页-->
+        <div class="course-page">
+            <el-pagination
+                    background
+                    @current-change="pageChange"
+                    :current-page="currentPage"
+                    :page-size="pageSize"
+                    layout="total, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </div>
     </div>
+
 </template>
 
 <script>
     export default {
         name: "ListCourse",
         props:{
-            courseList:Array
-        }
+            courseList:Array,
+            //当前页码
+            currentPage:Number,
+            //每页显示几条
+            pageSize:Number,
+            //总条数
+            total:Number,
+        },
+        methods:{
+            //改变页码
+            pageChange(data){
+                this.$emit("handleCurrentPageClick",data);
+            }
+        },
+
     }
 </script>
 
 <style scoped>
     .course{
         width: 100%;
-        border: 1px solid green;
+        padding-bottom: 60px;
     }
     .course-item{
         width: 215px;
-        /*border:1px solid green;*/
         float: left;
         margin-left: 11px;
         margin-right: 12px;
@@ -119,5 +145,8 @@
     }
     .clear{
         clear: both;
+    }
+    .course-page{
+        text-align: center;
     }
 </style>
