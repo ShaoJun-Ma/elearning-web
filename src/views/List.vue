@@ -14,6 +14,7 @@
                     @handleCurrentPageClick="handleCurrentPageClick">
             </list-course>
         </div>
+        <list-footer></list-footer>
     </div>
 </template>
 
@@ -21,9 +22,11 @@
     import ListHeader from "@/components/list/Header";
     import ListType from "@/components/list/Type";
     import ListCourse from "@/components/list/Course";
+    import ListFooter from "@/components/list/Footer";
     export default {
         name: "List",
         components:{
+            ListFooter,
             ListHeader,
             ListType,
             ListCourse,

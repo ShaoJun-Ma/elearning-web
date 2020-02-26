@@ -20,21 +20,21 @@
 
 <script>
     export default {
-        name: "HomeFooter"
+        name: "ListFooter"
     }
 </script>
 
 <style scoped>
     .footer{
         min-width: 1400px;
-        background-color: #b3c0d199;
+        background-color: #6b7889;
     }
     .footer-container{
         width: 1200px;
         height: 120px;
         padding:26px 0;
         margin: 0 auto;
-
+        color: white;
     }
 
     .footer-link{
