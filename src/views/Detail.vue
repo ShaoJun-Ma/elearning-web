@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- 头部 -->
         <list-header></list-header>
         <div class="top">
             <div class="top-container">
@@ -37,28 +38,55 @@
                 </div>
             </div>
         </div>
+        <!-- 菜单栏-->
         <div class="menu">
             <div class="menu-container">
                 <ul class="menu-ul">
-                    <li :class="{on:0 == menuIndex}" class="menu-li" @click="handleMenu(0)">课程章节</li>
-                    <li :class="{on:1 == menuIndex}" class="menu-li" @click="handleMenu(1)">问答讨论</li>
-                    <li :class="{on:2 == menuIndex}" class="menu-li" @click="handleMenu(2)">用户评价</li>
+                    <li :class="{on:0 == menuIndex}" class="menu-li" @click="handleMenuClick(0)">课程章节</li>
+                    <li :class="{on:1 == menuIndex}" class="menu-li" @click="handleMenuClick(1)">问答讨论</li>
+                    <li :class="{on:2 == menuIndex}" class="menu-li" @click="handleMenuClick(2)">用户评价</li>
                 </ul>
             </div>
+        </div>
+        <div class="list">
+            <div class="list-left">
+                <!-- 课程章节 -->
+                <course-section v-show="menuIndex == 0">
+                </course-section>
+                <!-- 问答讨论 -->
+                <question-discussion v-show="menuIndex == 1">
+                </question-discussion>
+                <!-- 用户评价 -->
+                <user-evaluation v-show="menuIndex == 2">
+                </user-evaluation>
+            </div>
+            <div class="list-right">bb</div>
+            <div class="clear"></div>
         </div>
     </div>
 </template>
 
 <script>
     import ListHeader from "@/components/list/Header";
+    import CourseSection from "@/components/detail/CourseSection";
+    import QuestionDiscussion from "@/components/detail/QuestionDiscussion";
+    import UserEvaluation from "@/components/detail/UserEvaluation";
     export default {
         name: "Detail",
         components: {
+            UserEvaluation,
+            QuestionDiscussion,
+            CourseSection,
             ListHeader,
         },
         data(){
             return{
                 menuIndex:0,
+            }
+        },
+        methods:{
+            handleMenuClick(index){
+                this.menuIndex = index;
             }
         }
     }
@@ -168,5 +196,22 @@
         color: red;
         border-bottom: 2px solid red;
         font-weight: bold;
+    }
+    .list{
+        width: 1200px;
+        margin: 0 auto;
+        border: 1px solid green;
+        padding: 30px;
+    }
+    .list-left{
+        width:800px;
+        /*border: 1px solid red;*/
+        float: left;
+    }
+    .list-right{
+        width: 330px;
+        border: 1px solid darkblue;
+        float: left;
+        margin-left: 25px;
     }
 </style>
