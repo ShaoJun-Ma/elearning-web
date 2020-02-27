@@ -7,31 +7,31 @@
                 <div class="path">
                     <el-breadcrumb separator-class="el-icon-arrow-right">
                         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                        <el-breadcrumb-item :to="{path :'/course/list'}">后端开发</el-breadcrumb-item>
-                        <el-breadcrumb-item :to="{path :'/course/list'}">初识Python</el-breadcrumb-item>
+                        <el-breadcrumb-item :to="{path :'/course/list'}">{{courseType.ctName}}</el-breadcrumb-item>
+                        <el-breadcrumb-item :to="{path :'/course/list'}">{{courseType.ptName}}</el-breadcrumb-item>
                         <el-breadcrumb-item>python</el-breadcrumb-item>
                     </el-breadcrumb>
                 </div>
                 <div class="title">
-                    <h2>初识Python</h2>
+                    <h2>{{course.name}}</h2>
                 </div>
                 <div class="info">
                     <div class="teacher-info">
                         <div class="img">
-                            <img src="../assets/imgs/defaultFace.jpg">
+                            <img :src="author.faceImg">
                         </div>
                         <div class="teacher-item">
-                            <a>廖雪峰</a>
+                            <a>{{author.nickname}}</a>
                             <br>
-                            <a>前端开发工程师</a>
+                            <a>{{author.job}}</a>
                         </div>
                         <div class="clear"></div>
                     </div>
                     <div class="course-info">
                         <ul class="top-ul-item">
-                            <li class="top-li-item el-icon-s-opportunity">难度：初级</li>
-                            <li class="top-li-item el-icon-s-marketing">时长：2小时</li>
-                            <li class="top-li-item el-icon-s-custom">学习人数：3425435</li>
+                            <li class="top-li-item el-icon-s-opportunity">难度：{{course.rank}}</li>
+                            <li class="top-li-item el-icon-s-marketing">时长：{{courseDetail.time}}</li>
+                            <li class="top-li-item el-icon-s-custom">学习人数：{{course.learnCounts}}</li>
                         </ul>
                     </div>
                     <div class="clear"></div>
@@ -49,19 +49,24 @@
             </div>
         </div>
         <div class="list">
-            <div class="list-left">
-                <!-- 课程章节 -->
-                <course-section v-show="menuIndex == 0">
-                </course-section>
-                <!-- 问答讨论 -->
-                <question-discussion v-show="menuIndex == 1">
-                </question-discussion>
-                <!-- 用户评价 -->
-                <user-evaluation v-show="menuIndex == 2">
-                </user-evaluation>
+            <div class="list-container">
+                <div class="list-left">
+                    <!-- 课程章节 -->
+                    <course-section
+                            v-show="menuIndex == 0"
+                            :courseDetail="courseDetail"
+                            :courseChapterList="courseChapterList">
+                    </course-section>
+                    <!-- 问答讨论 -->
+                    <question-discussion v-show="menuIndex == 1">
+                    </question-discussion>
+                    <!-- 用户评价 -->
+                    <user-evaluation v-show="menuIndex == 2">
+                    </user-evaluation>
+                </div>
+                <div class="list-right">bb</div>
+                <div class="clear"></div>
             </div>
-            <div class="list-right">bb</div>
-            <div class="clear"></div>
         </div>
     </div>
 </template>
@@ -82,12 +87,37 @@
         data(){
             return{
                 menuIndex:0,
+                author:[],
+                courseType:[],
+                course:[],
+                courseDetail:[],
+                courseChapterList:[],
             }
         },
         methods:{
+            //菜单切换
             handleMenuClick(index){
                 this.menuIndex = index;
+            },
+            //获取课程详情的数据
+            getDetailInfo(){
+                let data = this.$qs.stringify({
+                    cId:this.$route.params.id,
+                });
+                this.$axios.post("/api/course/getDetailInfo",data).then((result) => {
+                    result = result.data;
+                    console.log(result);
+                    data = result.result;
+                    this.courseType = data.courseType;
+                    this.author = data.author;
+                    this.course = data.course;
+                    this.courseDetail = data.courseDetail;
+                    this.courseChapterList = data.courseChapterList;
+                })
             }
+        },
+        mounted(){
+            this.getDetailInfo();
         }
     }
 </script>
@@ -95,6 +125,7 @@
 <style scoped>
     .top{
         min-width: 1400px;
+        background-color: #E9EEF3;
     }
     .top-container{
         width: 1200px;
@@ -169,7 +200,7 @@
         min-width: 1400px;
         height: 67px;
         background-color: white;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
     }
     .menu-container{
         width: 1200px;
@@ -198,10 +229,14 @@
         font-weight: bold;
     }
     .list{
-        width: 1200px;
+        min-width: 1400px;
+        background-color:#E9EEF3;
+    }
+    .list-container{
+        width: 1170px;
         margin: 0 auto;
         border: 1px solid green;
-        padding: 30px;
+        padding: 30px 30px 100px;
     }
     .list-left{
         width:800px;
@@ -212,6 +247,16 @@
         width: 330px;
         border: 1px solid darkblue;
         float: left;
-        margin-left: 25px;
+        margin-left: 35px;
     }
+    .el-icon-s-opportunity:before{
+        color: #F56C6C;
+    }
+    .el-icon-s-marketing:before {
+        color: #F56C6C;
+    }
+    .el-icon-s-custom:before{
+        color: #F56C6C;
+    }
+
 </style>

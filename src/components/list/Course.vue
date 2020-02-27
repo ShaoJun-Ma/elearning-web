@@ -7,7 +7,7 @@
                     <a class="course-type">{{item.courseTypeName}}</a>
                 </div>
                 <div class="course-item-desc">
-                    <router-link class="course-name" to="" tag="span">
+                    <router-link class="course-name" tag="span" :to="'/course/detail/'+item.course.id">
                         {{item.course.name}}
                     </router-link>
                     <p class="course-row">

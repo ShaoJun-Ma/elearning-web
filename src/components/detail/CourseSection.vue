@@ -1,39 +1,43 @@
 <template>
     <div class="course-section">
         <div class="course-desc section-box">
-            简介：Python教程基础分《Python入门》和《Python进阶》两门课程，本视频教程是Python第一门课程，是Python开发的入门教程，
-            将介绍Python语言的特点和适用范围，Python基本的数据类型，条件判断和循环，函数，以及Python特有的切片和列表生成式。
-            希望本python教程能够让您快速入门并编写简单的Python程序。
+           介绍：{{courseDetail.introduction}}
         </div>
-        <div class="course-chapters section-box">
-            <h3>第1章 课程介绍</h3>
+        <div class="course-chapters section-box" v-for="p_item of courseChapterList" :key="p_item.id">
+            <h3 class="headline">{{p_item.title}}</h3>
             <div class="chapter-desc">
-                介绍Python的诞生，Python有什么独特的特点，它适合用在哪些地方，不适合用在哪些地方，以及Python在现实世界中的应用。
+                {{p_item.introduction}}
             </div>
-            <ul class="video">
-                <li>
-                    <a class="el-icon-video-play"> 1-1 Python入门课程介绍 </a>
-                    <!--未完成-->
-<!--                    <i class="is-finish"><img src="../../assets/imgs/unfinished.png"></i>-->
-<!--                    <i class="is-finish"><img src="../../assets/imgs/unfinished.png"></i>-->
-                    <!--已完成-->
-                    <i class="is-finish"><img src="../../assets/imgs/finished.png"></i>
-                </li>
-            </ul>
+            <div class="chapter-items">
+                <ul class="chapter-ul">
+                    <li class="chapter-li" v-for="item of p_item.childChapterList" :key="item.id">
+                        <a class="subhead el-icon-video-play">1{{item.title}} </a>
+                        <!--已完成-->
+<!--                        <span class="is-finish"><img src="../../assets/imgs/finished.png"></span>-->
+                        <!--未完成-->
+                        <span class="is-finish"><img src="../../assets/imgs/unfinished.png"></span>
+<!--                        <span class="is-finish"><img src="../../assets/imgs/unfinished.png"></span>-->
+                    </li>
+                    <div class="clear"></div>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "CourseSection"
+        name: "CourseSection",
+        props:{
+            courseChapterList:Array,
+            courseDetail:Array,
+        }
     }
 </script>
 
 <style scoped>
     .course-section{
-        width: 800px;
-        margin-top: 10px;
+        width: 100%;
     }
     .section-box{
         line-height: 28px;
@@ -41,32 +45,50 @@
         border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
         padding: 15px;
-        margin-bottom: 8px;
-        text-align: left;
+        margin-bottom: 10px;
     }
-    .course-section-content .course-desc{
+    .course-chapters{
+        width: 800px;
+        box-sizing: border-box;
+    }
+    .course-desc{
         font-size: 15px;
     }
-    .course-chapters .course-chapters h3{
+    .headline{
         font-size: 16px;
+        margin: 10px 0;
     }
-    .course-chapters .chapter-desc{
+    .chapter-items{
+        width: 100%;
+        padding: 10px 0;
+    }
+    .chapter-ul{
+        width: 100%;
+    }
+    .chapter-desc{
         font-size: 14px;
+        padding-bottom: 10px;
         border-bottom: 1px solid #9ca8b533;
     }
-    .course-chapters .video li{
+    .chapter-li{
         cursor: pointer;
         height: 47px;
+        width: 99%;
         line-height: 47px;
-        /*background-color: rgba(25,137,250,0.26);*/
         padding-left: 10px;
     }
-    .course-chapters .video li:hover{
-        background-color: rgba(25,137,250,0.26);
+    .chapter-li:hover{
+        background-color: rgba(255,0,0,0.12);
     }
-    .course-chapters .video .is-finish{
+    .chapter-li:hover .el-icon-video-play{
+        color: red;
+    }
+    .is-finish{
         float: right;
         margin-right: 10px;
+    }
+    .clear{
+        clear: both;
     }
     .el-icon-s-opportunity:before{
         color: #F56C6C;
@@ -78,56 +100,5 @@
         color: #F56C6C;
     }
 
-    /*UserEvaluation用户评价*/
-    .user-evaluation-content{
-        width: 800px;
-        margin-top: 10px;
-        float: left;
-    }
-    .img-box{
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        float: left;
-    }
-    .img-box img{
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-    }
-    .content-box{
-        padding:0 0 23px 54px;
-    }
-    .content-box .name{
-        font-size: 14px;
-        color: #787d82;
-        font-weight:700;
-    }
-    .content-box .time{
-        float:right;
-        font-size: 13px;
-        color:#b5b9bc;
-        line-height: 35px;
-    }
-    .evaluation-input{
-        padding-left: 54px;
-        padding-top: 10px;
-        text-align: right;
-        position: relative;
-    }
-    .evaluation-input .num-tip{
-        position: absolute;
-        right: 16px;
-        bottom: 64px;
-        font-size: 12px;
-        color: #b5b9bc;
-        line-height: 20px;
-    }
 
-    /*分页*/
-    .course-page{
-        height: 47px;
-        text-align: center;
-        margin: 25px 0 auto;
-    }
 </style>
