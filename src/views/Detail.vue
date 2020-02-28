@@ -64,7 +64,36 @@
                     <user-evaluation v-show="menuIndex == 2">
                     </user-evaluation>
                 </div>
-                <div class="list-right">bb</div>
+                <div class="list-right">
+                    <div class="aside-info">
+                        <div v-if="isLogin == 'false'">
+                            <div class="start-learn">
+                                <el-button type="danger" round @click="dialogVisible = true">开始学习</el-button>
+                            </div>
+                        </div>
+                        <div v-if="isLogin == 'true'">
+                            <div class="learn-info">
+                                <span class="learn">已学70%</span>
+                                <span class="learn-time">学习耗时19小时33分</span>
+                                <el-progress :text-inside="true" :stroke-width="26" :percentage="70"></el-progress>
+                            </div>
+                            <div class="continue-info">
+                                <span>上次学至 1-1Python入门课程介绍</span>
+                                <el-button type="primary" round>继续学习</el-button>
+                            </div>
+                        </div>
+                        <div class="tip-info">
+                            <dl class="tip-dl">
+                                <dt class="tip-dt">课程须知</dt>
+                                <dd class="tip-dd">{{courseDetail.tip}}</dd>
+                            </dl>
+                            <dl class="tip-dl">
+                                <dt class="tip-dt">老师告诉你能学到什么？</dt>
+                                <dd class="tip-dd">{{courseDetail.learn}}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
                 <div class="clear"></div>
             </div>
         </div>
@@ -87,12 +116,17 @@
         data(){
             return{
                 menuIndex:0,
-                author:[],
+                author:{},
                 courseType:[],
-                course:[],
-                courseDetail:[],
+                course:{},
+                courseDetail:{},
                 courseChapterList:[],
             }
+        },
+        computed:{
+          isLogin(){
+              return this.$store.state.isLogin;
+          }
         },
         methods:{
             //菜单切换
@@ -235,28 +269,72 @@
     .list-container{
         width: 1170px;
         margin: 0 auto;
-        border: 1px solid green;
         padding: 30px 30px 100px;
     }
     .list-left{
         width:800px;
-        /*border: 1px solid red;*/
         float: left;
     }
     .list-right{
         width: 330px;
-        border: 1px solid darkblue;
         float: left;
         margin-left: 35px;
     }
-    .el-icon-s-opportunity:before{
-        color: #F56C6C;
-    }
-    .el-icon-s-marketing:before {
-        color: #F56C6C;
-    }
-    .el-icon-s-custom:before{
+    .el-icon-s-opportunity:before,.el-icon-s-marketing:before,.el-icon-s-custom:before{
         color: #F56C6C;
     }
 
+    .aside-info{
+        width: 94%;
+        background-color: white;
+        border-radius: 10px;
+        padding: 10px;
+    }
+    .start-learn{
+        text-align: center;
+        height: 50px;
+        line-height: 50px;
+    }
+    .start-learn .el-button{
+        width: 267px !important;
+    }
+    .learn-info{
+        line-height: 30px;
+        font-size: 13px;
+    }
+    .learn{
+        float: left;
+        font-size: 14px;
+        font-weight: bolder;
+    }
+    .learn-time{
+        float: right;
+    }
+    .continue-info{
+        margin-top: 10px;
+        line-height: 30px;
+        font-size: 13px;
+        text-align: center;
+    }
+    .continue-info .el-button{
+        width: 267px;
+    }
+    .tip-info{
+        margin-top: 10px;
+        line-height: 21px;
+        text-align: left;
+    }
+    .tip-dl{
+        margin: 0;
+        padding:10px 20px;
+    }
+    .tip-dt{
+        font-weight: bolder;
+        padding: 5px 0;
+    }
+    .tip-dd{
+        color: #545c63;
+        margin: 0;
+        font-size: 14px;
+    }
 </style>

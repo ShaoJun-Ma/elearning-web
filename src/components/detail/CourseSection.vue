@@ -30,7 +30,7 @@
         name: "CourseSection",
         props:{
             courseChapterList:Array,
-            courseDetail:Array,
+            courseDetail:Object,
         }
     }
 </script>
