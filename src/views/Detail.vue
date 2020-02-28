@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- 头部 -->
         <list-header></list-header>
         <div class="top">
             <div class="top-container">
@@ -97,17 +96,20 @@
                 <div class="clear"></div>
             </div>
         </div>
+        <list-footer></list-footer>
     </div>
 </template>
 
 <script>
     import ListHeader from "@/components/list/Header";
+    import ListFooter from "@/components/list/Footer";
     import CourseSection from "@/components/detail/CourseSection";
     import QuestionDiscussion from "@/components/detail/QuestionDiscussion";
     import UserEvaluation from "@/components/detail/UserEvaluation";
     export default {
         name: "Detail",
         components: {
+            ListFooter,
             UserEvaluation,
             QuestionDiscussion,
             CourseSection,
