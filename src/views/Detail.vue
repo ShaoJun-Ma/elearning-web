@@ -60,7 +60,11 @@
                     <question-discussion v-show="menuIndex == 1">
                     </question-discussion>
                     <!-- 用户评价 -->
-                    <user-evaluation v-show="menuIndex == 2">
+                    <user-evaluation
+                            v-show="menuIndex == 2"
+                            :evaluationList="evaluationList"
+                            ref="userEvaluation"
+                            @handleCurrentPageClick="handleCurrentPageClick">
                     </user-evaluation>
                 </div>
                 <div class="list-right">
@@ -117,12 +121,13 @@
         },
         data(){
             return{
-                menuIndex:0,
+                menuIndex:2,
                 author:{},
                 courseType:[],
                 course:{},
                 courseDetail:{},
                 courseChapterList:[],
+                evaluationList:{},
             }
         },
         computed:{
@@ -134,6 +139,12 @@
             //菜单切换
             handleMenuClick(index){
                 this.menuIndex = index;
+                if(index == 1){
+                    this.getDiscussion();
+                }
+                if(index == 2){
+                    this.getEvaluation();
+                }
             },
             //获取课程详情的数据
             getDetailInfo(){
@@ -150,6 +161,36 @@
                     this.courseDetail = data.courseDetail;
                     this.courseChapterList = data.courseChapterList;
                 })
+            },
+            //获取问答讨论
+            getDiscussion(){
+                this.$axios.post("/api/course/getDiscussion").then((result)=>{
+                    result = result.data;
+                    console.log(result);
+                })
+            },
+            //获取用户评价
+            getEvaluation(){
+                let userEvaluation = this.$refs.userEvaluation;
+                let currentPage = userEvaluation.currentPage;
+                let pageSize = userEvaluation.pageSize;
+                let data = this.$qs.stringify({
+                    cId:this.$route.params.id,
+                    currentPage:currentPage,
+                    pageSize:pageSize,
+                });
+                this.$axios.post("/api/course/getEvaluation",data).then((result)=>{
+                    result = result.data;
+                    console.log(result);
+                    this.evaluationList = result.result;
+                    userEvaluation.total = result.result.total;
+                    userEvaluation.pageSize = result.result.pageSize;
+                })
+            },
+            handleCurrentPageClick(data){
+                console.log(data);
+                this.$refs.userEvaluation.currentPage = data;
+                this.getEvaluation();
             }
         },
         mounted(){

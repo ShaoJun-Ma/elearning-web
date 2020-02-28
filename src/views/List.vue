@@ -72,13 +72,13 @@
                 let rankList = this.$refs.listType.rankList;
                 let rank_index = this.$refs.listType.rank_index;
 
-                let pId = direction_index == -1?0:direction_index;
-                let cId = type_index == -1?0:type_index;
+                let ptId = direction_index == -1?0:direction_index;
+                let ctId = type_index == -1?0:type_index;
                 let rank = rankList[rank_index];
 
                 let data = this.$qs.stringify({
-                    pId:pId,
-                    cId:cId,
+                    ptId:ptId,
+                    ctId:ctId,
                     rank:rank,
                     isFree:1,
                     currentPage:this.currentPage,

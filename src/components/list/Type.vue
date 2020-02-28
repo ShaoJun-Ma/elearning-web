@@ -91,7 +91,7 @@
             //改变方向
             updateDirection(){
                 let data = this.$qs.stringify({
-                    cId:this.type_index,
+                    ctId:this.type_index,
                 });
                 //获取分类对应的方向
                 this.$axios.post("/api/course/getParentType",data).then((result) => {
