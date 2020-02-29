@@ -1,6 +1,6 @@
 <template>
     <div class="top">
-        <div class="back">
+        <div class="back" @click="handleBackClick">
             <div class="back-icon">
                 <i class="el-icon-back"></i>
             </div>
@@ -79,6 +79,9 @@
             handleSignIn(){
                 this.dialogVisible = true;
                 this.activeName = "login";
+            },
+            handleBackClick(){
+                this.$router.go(-1);
             },
             logout(){
                 let data = this.$qs.stringify({

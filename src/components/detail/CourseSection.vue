@@ -11,7 +11,7 @@
             <div class="chapter-items">
                 <ul class="chapter-ul">
                     <li class="chapter-li" v-for="item of p_item.childChapterList" :key="item.id" @click="handleChapterClick(item.id)">
-                        <a class="subhead el-icon-video-play">1{{item.title}} </a>
+                        <a class="subhead el-icon-video-play">{{item.title}} </a>
                         <!--已完成-->
                         <span class="is-finish" v-if="item.is_finished == 1 && isLogin == 'true'"><img src="../../assets/imgs/finished.png"></span>
                         <!--未完成-->

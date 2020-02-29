@@ -34,6 +34,7 @@ const routes = [
         name:"Video",
         component:Video
     }
+
 ];
 
 export default new VueRouter({
