@@ -8,7 +8,7 @@
                         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
                         <el-breadcrumb-item :to="{path :'/course/list'}">{{courseType.ctName}}</el-breadcrumb-item>
                         <el-breadcrumb-item :to="{path :'/course/list'}">{{courseType.ptName}}</el-breadcrumb-item>
-                        <el-breadcrumb-item>python</el-breadcrumb-item>
+                        <el-breadcrumb-item>{{course.name}}</el-breadcrumb-item>
                     </el-breadcrumb>
                 </div>
                 <div class="title">
@@ -71,15 +71,15 @@
                     <div class="aside-info">
                         <div v-if="isLogin == 'false'">
                             <div class="start-learn">
-                                <el-button type="danger" round @click="dialogVisible = true">开始学习</el-button>
+                                <el-button type="danger" round @click="handleStartLearnClick()">开始学习</el-button>
                             </div>
                         </div>
                         <div v-if="isLogin == 'true'">
-                            <div class="learn-info">
-                                <span class="learn">已学70%</span>
-                                <span class="learn-time">学习耗时19小时33分</span>
-                                <el-progress :text-inside="true" :stroke-width="26" :percentage="70"></el-progress>
-                            </div>
+<!--                            <div class="learn-info">-->
+<!--                                <span class="learn">已学70%</span>-->
+<!--                                <span class="learn-time">学习耗时19小时33分</span>-->
+<!--                                <el-progress :text-inside="true" :stroke-width="26" :percentage="70"></el-progress>-->
+<!--                            </div>-->
                             <div class="continue-info">
                                 <span>上次学至 1-1Python入门课程介绍</span>
                                 <el-button type="primary" round>继续学习</el-button>
@@ -121,7 +121,7 @@
         },
         data(){
             return{
-                menuIndex:2,
+                menuIndex:0,
                 author:{},
                 courseType:[],
                 course:{},
@@ -131,9 +131,12 @@
             }
         },
         computed:{
-          isLogin(){
-              return this.$store.state.isLogin;
-          }
+           isLogin(){
+               return this.$store.state.isLogin;
+           },
+           userInfo(){
+               return this.$store.state.userInfo;
+           }
         },
         methods:{
             //菜单切换
@@ -150,6 +153,7 @@
             getDetailInfo(){
                 let data = this.$qs.stringify({
                     cId:this.$route.params.id,
+                    uId:this.userInfo.id,
                 });
                 this.$axios.post("/api/course/getDetailInfo",data).then((result) => {
                     result = result.data;
@@ -187,10 +191,22 @@
                     userEvaluation.pageSize = result.result.pageSize;
                 })
             },
+            //切换评论的页码
             handleCurrentPageClick(data){
                 console.log(data);
                 this.$refs.userEvaluation.currentPage = data;
                 this.getEvaluation();
+            },
+            //点击开始学习
+            handleStartLearnClick(){
+                if(this.isLogin == "false"){
+                    this.$message({
+                        message:"请先登录后才能进行学习！",
+                        type:"error",
+                    })
+                }else{
+                    this.$router.push("/course/video/");
+                }
             }
         },
         mounted(){

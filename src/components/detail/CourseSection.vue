@@ -10,13 +10,13 @@
             </div>
             <div class="chapter-items">
                 <ul class="chapter-ul">
-                    <li class="chapter-li" v-for="item of p_item.childChapterList" :key="item.id">
+                    <li class="chapter-li" v-for="item of p_item.childChapterList" :key="item.id" @click="handleChapterClick(item.id)">
                         <a class="subhead el-icon-video-play">1{{item.title}} </a>
                         <!--已完成-->
-<!--                        <span class="is-finish"><img src="../../assets/imgs/finished.png"></span>-->
+                        <span class="is-finish" v-if="item.is_finished == 1 && isLogin == 'true'"><img src="../../assets/imgs/finished.png"></span>
                         <!--未完成-->
-                        <span class="is-finish"><img src="../../assets/imgs/unfinished.png"></span>
-<!--                        <span class="is-finish"><img src="../../assets/imgs/unfinished.png"></span>-->
+                        <span class="is-finish" v-if="isLogin == 'false'"><img src="../../assets/imgs/unfinished.png"></span>
+                        <span class="is-finish" v-if="item.is_finished == 0 && isLogin == 'true'"><img src="../../assets/imgs/unfinished.png"></span>
                     </li>
                     <div class="clear"></div>
                 </ul>
@@ -31,6 +31,23 @@
         props:{
             courseChapterList:Array,
             courseDetail:Object,
+        },
+        computed:{
+          isLogin(){
+              return this.$store.state.isLogin;
+          }
+        },
+        methods:{
+            handleChapterClick(ccId){
+                if(this.isLogin == "false"){
+                    this.$message({
+                        message:"请先登录后才能进行学习！",
+                        type:"error",
+                    })
+                }else{
+                    this.$router.push("/course/video/"+ccId);
+                }
+            }
         }
     }
 </script>

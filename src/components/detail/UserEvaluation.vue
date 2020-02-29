@@ -55,6 +55,14 @@
         },
         data(){
           return{
+              ruleForm:{
+                  textarea:"",
+              },
+              rules:{
+                  textarea:[
+                      { min: 10, max: 300, message: '字数不得少于10个字', trigger: 'blur' }
+                  ]
+              },
               currentPage:1,
               pageSize:2,
               total:0,
@@ -63,6 +71,9 @@
         computed:{
             isLogin(){
                 return this.$store.state.isLogin;
+            },
+            userInfo(){
+                return this.$store.state.userInfo;
             }
         },
         methods:{
@@ -78,7 +89,6 @@
         width: 800px;
         margin-top: 10px;
         float: left;
-        border:1px solid red;
     }
     .section-box{
         line-height: 28px;
