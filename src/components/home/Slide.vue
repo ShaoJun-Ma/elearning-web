@@ -6,14 +6,14 @@
                      mode="vertical" :collapse="true">
                 <el-submenu :index="p_item.id+''" v-for="(p_item) of courseTypeList" :key="p_item.id">
                     <template slot="title">
-                        <router-link tag="div" to="/" class="parent-type-item">
+                        <div class="parent-type-item">
                             {{p_item.name}}<i class="el-icon-caret-right"></i>
-                        </router-link>
+                        </div>
                     </template>
                     <div class="menu-show">
                         <span class="parent-type-name">{{p_item.name}}</span>
                         <br>
-                        <router-link tag="span" to="/" class="child-type-item" v-for="(c_item) of p_item.childCourseType" :key="c_item.id">
+                        <router-link tag="span" :to="{name:'List',params:{id:c_item.id}}" class="child-type-item" v-for="(c_item) of p_item.childCourseType" :key="c_item.id">
                             {{c_item.name}}
                             <el-divider direction="vertical"></el-divider>
                         </router-link>

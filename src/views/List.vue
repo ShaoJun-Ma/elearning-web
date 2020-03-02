@@ -3,6 +3,7 @@
         <list-header></list-header>
         <list-type
                 :courseTypeList="courseTypeList"
+                :typeId="typeId"
                 ref="listType">
         </list-type>
         <div class="list-container">
@@ -42,11 +43,14 @@
                 pageSize:2,
                 //总条数
                 total:0,
+                typeId:0,
             }
         },
         methods:{
             //获取父组件List的数据
             getListInfo(){
+                console.log(this.$route.params.id);
+                this.typeId = this.$route.params.id;
                 let data = this.$qs.stringify({
                     isFree:1,
                     currentPage:this.currentPage,
@@ -90,6 +94,7 @@
                     this.courseList = result.result.list;
                     this.total = result.result.total;
                 })
+
             },
             //改变页码
             handleCurrentPageClick(data){

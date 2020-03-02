@@ -26,12 +26,14 @@
             <!--分类（子级类型）-->
             <div class="course-type">
                 <span class="classify">分类：</span>
+
                 <ul class="type-ul">
-                    <li  class="type-item" :class="{on:-1 == type_index}" @click="handleTypeClick(-1)">全部</li>
+                    <li  class="type-item" :class="{on:-1 == computedTypeIndex}" @click="handleTypeClick(-1)">全部</li>
                     <div v-for="item of childTypeList" :key="item.id">
-                        <li class="type-item" :class="{on:item.id == type_index}" @click="handleTypeClick(item.id)">{{item.name}}</li>
+                        <li class="type-item" :class="{on:item.id == computedTypeIndex}" @click="handleTypeClick(item.id)">{{item.name}}</li>
                     </div>
                 </ul>
+
                 <!--消除浮动-->
                 <div class="clear"></div>
             </div>
@@ -52,13 +54,17 @@
     export default {
         name: "ListType",
         props:{
-            courseTypeList:Array
+            courseTypeList:Array,
+            //路径上的类型id
+            typeId:Number,
         },
         data(){
             return{
                 rankList:["全部","初级","中级","高级"],
                 //方向（点击哪一个，就亮灯）
                 direction_index:-1,
+                //判断是否有点击分类
+                type_flag:false,
                 //分类
                 type_index:-1,
                 //难度
@@ -76,6 +82,7 @@
             },
             //点击分类
             handleTypeClick(index){
+                this.type_flag = true;
                 this.type_index = index;
                 if(this.type_index != -1){
                     //改变方向
@@ -121,6 +128,14 @@
                     }
                 }
                 return childTypeList;
+            },
+            computedTypeIndex(){
+                //typeId不为空 且 没有具体点击分类按钮
+                if(this.typeId && !this.type_flag){
+                    return this.typeId;
+                }else{
+                    return this.type_index;
+                }
             }
         }
     }

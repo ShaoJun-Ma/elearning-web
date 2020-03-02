@@ -20,7 +20,7 @@ const routes = [
         component:SignIn
     },
     {
-        path:"/course/list",
+        path:"/course/list/:id",
         name:"List",
         component:List
     },

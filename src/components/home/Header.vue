@@ -6,7 +6,7 @@
             </div>
             <div class="header-link">
                 <ul class="items-ul">
-                    <router-link tag="li" to="/course/list" class="item-link">免费课程</router-link>
+                    <router-link tag="li" :to="{name:'List',params:{id:-1}}" class="item-link">免费课程</router-link>
                     <router-link tag="li" to="/courseList" class="item-link">实战课程</router-link>
                     <router-link tag="li" to="/courseList" class="item-link">课程专栏</router-link>
                     <router-link tag="li" to="/courseList" class="item-link">猿问猿答</router-link>

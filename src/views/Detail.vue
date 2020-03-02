@@ -6,8 +6,8 @@
                 <div class="path">
                     <el-breadcrumb separator-class="el-icon-arrow-right">
                         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                        <el-breadcrumb-item :to="{path :'/course/list'}">{{courseType.ctName}}</el-breadcrumb-item>
                         <el-breadcrumb-item :to="{path :'/course/list'}">{{courseType.ptName}}</el-breadcrumb-item>
+                        <el-breadcrumb-item :to="{path :'/course/list'}">{{courseType.ctName}}</el-breadcrumb-item>
                         <el-breadcrumb-item>{{course.name}}</el-breadcrumb-item>
                     </el-breadcrumb>
                 </div>
