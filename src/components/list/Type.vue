@@ -193,6 +193,7 @@
         /*border: 1px solid red;*/
         height: 25px;
         line-height: 25px;
+        float: left;
         text-align: center;
         padding:5px 10px;
         margin:1px 5px;

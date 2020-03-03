@@ -5,6 +5,7 @@ import SignIn from "@/views/SignIn";
 import List from "@/views/List";
 import Detail from "@/views/Detail";
 import Video from "@/views/Video";
+import User from "@/views/User";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
         path:"/course/video/:id",
         name:"Video",
         component:Video
+    },
+    {
+        path:"/user/userInfo",
+        name:"User",
+        component:User
     }
 
 ];
