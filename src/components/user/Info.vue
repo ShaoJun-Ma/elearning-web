@@ -61,6 +61,7 @@
                     sex:this.$store.state.userInfo.sex,
                     city:this.$store.state.userInfo.city,
                     job:this.$store.state.userInfo.job,
+                    role:this.$store.state.userInfo.role,
                     signature:this.$store.state.userInfo.signature,
                 },
             }
@@ -116,7 +117,7 @@
             },
             //将city数组转为字符串进行保存
             changeCityInfo(value){
-                console.log(value);
+                // console.log(value);
                 this.form.city = CodeToText[value[0]]+"/"+CodeToText[value[1]]+"/"+CodeToText[value[2]];
             }
         }

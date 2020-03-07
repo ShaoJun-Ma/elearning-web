@@ -20,6 +20,7 @@
                                 :before-close="handleClose">
                             <div>
                                 <el-upload
+                                        ref="uploadImg"
                                         class="avatar-uploader"
                                         action=""
                                         :show-file-list="false"
@@ -32,7 +33,7 @@
                                 <span class="img-rule">图片宽度*高度至少为150*150像素，大小不超过2MB</span>
                             </div>
                             <span slot="footer" class="dialog-footer">
-                                <el-button @click="dialogVisible = false">取 消</el-button>
+                                <el-button @click="cancel">取 消</el-button>
                                 <el-button type="primary" @click="uploadAvatar">确 定</el-button>
                               </span>
                         </el-dialog>
@@ -42,7 +43,7 @@
                     <div class="user-data">
                         <p>
                             <span>性别：{{userInfo.sex}}</span>
-                            <span>角色：{{userInfo.job}}</span>
+                            <span>角色：{{userInfo.role}}</span>
                         </p>
                         <p>所在城市：{{userInfo.city}}</p>
                         <p>个人签名：{{userInfo.signature}}</p>
@@ -198,6 +199,8 @@
             };
             return{
                 dialogVisible:false,
+                imageUrl:"",
+                avatar:null,
                 rules: {
                     oldPass: [
                         { validator: validateOldPass, trigger: 'blur' }
@@ -216,20 +219,57 @@
             userInfo(){
                 return this.$store.state.userInfo;
             },
-
         },
         methods:{
+            //关闭 头像对话框
             handleClose(){
-
+                this.dialogVisible = false;
+                this.imageUrl = "";
             },
-            changeAvatar(){
-
+            //取消上传头像
+            cancel(){
+               this.imageUrl = "";
             },
-            beforeAvatarUpload(){
+            //上传头像之前
+            beforeAvatarUpload(file){
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
 
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
             },
+            changeAvatar(file){
+                console.log(file.raw);
+                //获取头像文件
+                this.avatar = file.raw;
+                this.imageUrl = URL.createObjectURL(file.raw);
+            },
+            //上传头像
             uploadAvatar(){
+                let formData = new FormData();
+                formData.append('picFile',this.avatar);
+                this.$axios.post("/api/user/uploadAvatar",formData).then((result) => {
+                    result = result.data;
+                    console.log(result);
+                    if(result.status == 200){
+                        this.dialogVisible = false;
+                        this.imageUrl = "";
 
+                        this.$message({
+                            message:result.message,
+                            type:"success",
+                        });
+                        //更新 vuex 中 state
+                        this.$store.commit("changeUserInfo",result.result);
+                        //更新缓存
+                        sessionStorage.setItem("userInfo",this.$qs.stringify(result.result));
+                    }
+                })
             }
         }
     }
