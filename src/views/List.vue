@@ -49,8 +49,8 @@
         methods:{
             //获取父组件List的数据
             getListInfo(){
-                console.log(this.$route.params.id);
-                this.typeId = this.$route.params.id;
+                console.log(this.$route.params);
+                this.typeId = parseInt(this.$route.params.id);
                 let data = this.$qs.stringify({
                     isFree:1,
                     currentPage:this.currentPage,

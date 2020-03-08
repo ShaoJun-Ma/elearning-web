@@ -3,10 +3,10 @@
         <div class="header-container">
             <div class="header-link">
                 <ul class="ul-items">
-                    <router-link tag="li" to="/" >white首页</router-link>
-                    <router-link class="on" tag="li" to="/course/list">免费课程</router-link>
-                    <router-link tag="li" to="/white" >实战课程</router-link>
-                    <router-link tag="li" to="/white">课程专栏</router-link>>
+                    <router-link tag="li" to="/" :class="{on:link_index == 0}">white首页</router-link>
+                    <router-link tag="li" to="/course/list/-1" :class="{on:link_index == 1}">免费课程</router-link>
+                    <router-link tag="li" to="/white">实战课程</router-link>
+                    <router-link tag="li" to="/course/teacherGroup" :class="{on:link_index == 2}">加入讲师团</router-link>
                     <router-link tag="li" to="/white">猿问猿答</router-link>>
                 </ul>
             </div>
@@ -60,8 +60,8 @@
                     <a class="logout" @click="logout">退出</a>
                 </div>
             </div>
-            <div class="header-cart">
-                <span class="el-icon-shopping-cart-2">购物车</span>
+            <div class="header-bell">
+                <span class="el-icon-bell">通知</span>
             </div>
 
         </div>
@@ -89,6 +89,7 @@
                 activeName:"",
                 dialogVisible:false,
                 hoverArea:true,
+                link_index:0,
             }
         },
         computed:{
@@ -100,6 +101,9 @@
             }
         },
         methods:{
+            handleLinkIndex(){
+                this.link_index = this.$route.meta.headerIndex;
+            },
             handleSignIn(activeName){
                 // console.log(sign);
                 this.dialogVisible = true;
@@ -135,6 +139,7 @@
             }
         },
         mounted(){
+            this.handleLinkIndex();
             if(this.$store.state.isLogin == null){
                 this.$store.state.isLogin = "false";
             }
@@ -188,16 +193,16 @@
     .header-search >>> .el-input{
         padding: 0 !important;
     }
-    .header-cart{
+    .header-bell{
         float: right;
-        width: 70px;
+        width: 86px;
         padding: 0 10px;
         text-align: center;
         margin-left: 30px;
         cursor: pointer;
         color: gray;
     }
-    .header-cart:hover{
+    .header-bell:hover{
         color: white;
     }
     .header-signIn{

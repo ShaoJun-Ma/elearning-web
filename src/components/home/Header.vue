@@ -8,7 +8,7 @@
                 <ul class="items-ul">
                     <router-link tag="li" :to="{name:'List',params:{id:-1}}" class="item-link">免费课程</router-link>
                     <router-link tag="li" to="/courseList" class="item-link">实战课程</router-link>
-                    <router-link tag="li" to="/courseList" class="item-link">课程专栏</router-link>
+                    <router-link tag="li" to="/course/teacherGroup" class="item-link">加入讲师团</router-link>
                     <router-link tag="li" to="/courseList" class="item-link">猿问猿答</router-link>
                 </ul>
             </div>
@@ -63,8 +63,10 @@
                     <a class="logout" @click="logout">退出</a>
                 </div>
             </div>
-            <div class="header-cart">
-                <span class="el-icon-shopping-cart-2">购物车</span>
+            <div class="header-bell">
+                <span class="el-icon-bell">
+                    通知
+                </span>
             </div>
         </div>
         <!--登录注册对话框-->
@@ -188,15 +190,15 @@
         width: 300px;
         padding:0 20px;
     }
-    .header-cart{
+    .header-bell{
         float: right;
-        width: 70px;
+        width: 86px;
         padding: 0 10px;
         text-align: center;
         margin-left: 30px;
         cursor: pointer;
     }
-    .header-cart:hover{
+    .header-bell:hover{
         color: white;
     }
     .header-signIn{

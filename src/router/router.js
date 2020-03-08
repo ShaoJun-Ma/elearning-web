@@ -6,6 +6,7 @@ import List from "@/views/List";
 import Detail from "@/views/Detail";
 import Video from "@/views/Video";
 import User from "@/views/User";
+import TeacherGroup from "@/views/TeacherGroup";
 
 Vue.use(VueRouter);
 
@@ -13,7 +14,10 @@ const routes = [
     {
         path:"/",
         name:"Home",
-        component:Home
+        component:Home,
+        meta:{
+            headerIndex:0
+        }
     },
     {
         path:"/signIn",
@@ -23,7 +27,10 @@ const routes = [
     {
         path:"/course/list/:id",
         name:"List",
-        component:List
+        component:List,
+        meta:{
+            headerIndex:1
+        }
     },
     {
         path:"/course/detail/:id",
@@ -39,6 +46,14 @@ const routes = [
         path:"/user/userInfo",
         name:"User",
         component:User
+    },
+    {
+        path:"/course/teacherGroup",
+        name:"TeacherGroup",
+        component:TeacherGroup,
+        meta:{
+            headerIndex:2
+        }
     }
 
 ];
