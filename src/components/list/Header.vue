@@ -152,7 +152,11 @@
             },
             //处理 加入讲师团
             handleTeacherGroup(){
-                this.handleIsLogin("/course/teacherGroup");
+                if(this.li_tag == "加入讲师团"){
+                    this.handleIsLogin("/course/teacherGroup");
+                }else{
+                    this.handleIsLogin("/course/addCourse");
+                }
             },
             //处理 通知
             handleMessage(){

@@ -8,6 +8,7 @@ import Video from "@/views/Video";
 import User from "@/views/User";
 import Message from "@/views/Message";
 import TeacherGroup from "@/views/TeacherGroup";
+import AddCourse from "@/views/AddCourse";
 
 Vue.use(VueRouter);
 
@@ -63,7 +64,13 @@ const routes = [
         meta:{
             headerIndex:3
         }
+    },
+    {
+        path:"/course/addCourse",
+        name:"AddCourse",
+        component:AddCourse,
     }
+
 
 ];
 
