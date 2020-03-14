@@ -5,8 +5,8 @@
                 <ul class="ul-items">
                     <router-link tag="li" to="/" :class="{on:link_index == 0}">white首页</router-link>
                     <router-link tag="li" to="/course/list/-1" :class="{on:link_index == 1}">免费课程</router-link>
-                    <router-link tag="li" to="/white">实战课程</router-link>
-                    <router-link tag="li" to="/course/teacherGroup" :class="{on:link_index == 2}">加入讲师团</router-link>
+                    <router-link tag="li" to="/course/payList/-1">实战课程</router-link>
+                    <li @click="handleTeacherGroup" :class="{on:link_index == 2}">{{li_tag}}</li>
                     <router-link tag="li" to="/white">猿问猿答</router-link>>
                 </ul>
             </div>
@@ -61,7 +61,13 @@
                 </div>
             </div>
             <div class="header-bell">
-                <span class="el-icon-bell">通知</span>
+                <div v-if="message == 0" class="bell">
+                    <span class="el-icon-bell" @click="handleMessage">通知</span>
+                </div>
+                <div v-else class="bell">
+                    <span class="message">{{message}}</span>
+                    <span class="el-icon-bell" @click="handleMessage">通知</span>
+                </div>
             </div>
 
         </div>
@@ -90,6 +96,8 @@
                 dialogVisible:false,
                 hoverArea:true,
                 link_index:0,
+                message:0,
+                li_tag:"加入讲师团",
             }
         },
         computed:{
@@ -101,14 +109,18 @@
             }
         },
         methods:{
+            //控制哪一个链接有样式
             handleLinkIndex(){
+                console.log(this.$route.meta.headerIndex);
                 this.link_index = this.$route.meta.headerIndex;
             },
+            //处理登录、注册的转换
             handleSignIn(activeName){
                 // console.log(sign);
                 this.dialogVisible = true;
                 this.activeName = activeName;
             },
+            //退出
             logout(){
                 let data = this.$qs.stringify({
                     uId:this.$store.state.userInfo.id,
@@ -128,6 +140,7 @@
                         this.$store.commit("changeUserInfo",{});
 
                         this.hoverArea = false;
+                        this.$router.push("/");
                     }else{
                         this.$message({
                             message:result.message,
@@ -136,10 +149,37 @@
                     }
                 });
 
+            },
+            //处理 加入讲师团
+            handleTeacherGroup(){
+                this.handleIsLogin("/course/teacherGroup");
+            },
+            //处理 通知
+            handleMessage(){
+                this.handleIsLogin("/user/message");
+            },
+            //未登录不能进入特定的页面
+            handleIsLogin(path){
+                if(this.$store.state.isLogin == 'true'){
+                    this.$router.push(path);
+                }else{
+                    this.$message({
+                        message:"请先进行登录！",
+                        type:"error",
+                    })
+                }
+            },
+            //处理 不同角色，显示的标签不同
+            handleLiTag(){
+                if(this.$store.state.userInfo.role == "老师"){
+                    this.li_tag = "创建课程";
+                }
             }
+
         },
         mounted(){
             this.handleLinkIndex();
+            this.handleLiTag();
             if(this.$store.state.isLogin == null){
                 this.$store.state.isLogin = "false";
             }
@@ -183,7 +223,7 @@
     .ul-items li:hover{
         color: white;
     }
-    .ul-items .on{
+    .on{
         color: white;
     }
     .header-search{
@@ -194,16 +234,40 @@
         padding: 0 !important;
     }
     .header-bell{
+        font-size: 15px;
         float: right;
         width: 86px;
-        padding: 0 10px;
+        height: 44px;
+        line-height: 44px;
         text-align: center;
-        margin-left: 30px;
         cursor: pointer;
-        color: gray;
-    }
-    .header-bell:hover{
         color: white;
+        box-sizing: border-box;
+        position: relative;
+    }
+    .bell{
+        height: 32px;
+        line-height: 32px;
+        margin: 5px 10px;
+        border-radius: 10%;
+    }
+    .bell:hover{
+        background-color: white;
+        color: red;
+    }
+    .bell:hover .message{
+        color: white;
+    }
+    .message{
+        width: 27px;
+        height: 18px;
+        line-height: 18px;
+        font-size: xx-small;
+        background-color: #f56c6c;
+        border-radius:10px;
+        position: absolute;
+        top: 0;
+        right: 0;
     }
     .header-signIn{
         color: white;

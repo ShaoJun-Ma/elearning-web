@@ -6,6 +6,7 @@ import List from "@/views/List";
 import Detail from "@/views/Detail";
 import Video from "@/views/Video";
 import User from "@/views/User";
+import Message from "@/views/Message";
 import TeacherGroup from "@/views/TeacherGroup";
 
 Vue.use(VueRouter);
@@ -53,6 +54,14 @@ const routes = [
         component:TeacherGroup,
         meta:{
             headerIndex:2
+        }
+    },
+    {
+        path:"/user/message",
+        name:"Message",
+        component:Message,
+        meta:{
+            headerIndex:3
         }
     }
 

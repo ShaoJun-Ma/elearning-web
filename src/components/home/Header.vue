@@ -64,9 +64,13 @@
                 </div>
             </div>
             <div class="header-bell">
-                <span class="el-icon-bell">
-                    通知
-                </span>
+                <div v-if="message == 0" class="bell">
+                    <router-link tag="span" to="/" class="el-icon-bell">通知</router-link>
+                </div>
+                <div v-else class="bell">
+                    <span class="message">{{message}}</span>
+                    <router-link tag="span" to="/" class="el-icon-bell">通知</router-link>
+                </div>
             </div>
         </div>
         <!--登录注册对话框-->
@@ -93,6 +97,7 @@
                 dialogVisible:false,
                 activeName:"",
                 hoverArea:true,
+                message:0,
             }
         },
         computed:{
@@ -193,13 +198,37 @@
     .header-bell{
         float: right;
         width: 86px;
+        height: 70px;
+        line-height: 70px;
         padding: 0 10px;
         text-align: center;
         margin-left: 30px;
         cursor: pointer;
+        box-sizing: border-box;
+        position: relative;
     }
-    .header-bell:hover{
+    .bell{
+        width: 100%;
+        height:100%;
+        border-radius: 10%;
+    }
+    .bell:hover{
         color: white;
+    }
+    .bell:hover .message{
+        color: red;
+    }
+    .message{
+        width: 27px;
+        height: 18px;
+        line-height: 18px;
+        font-size: xx-small;
+        background-color:white;
+        border-radius:10px;
+        position: absolute;
+        color:red;
+        top: 14px;
+        right:-7px;
     }
     .header-signIn{
         float: right;

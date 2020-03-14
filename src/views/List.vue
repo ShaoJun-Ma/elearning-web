@@ -49,7 +49,7 @@
         methods:{
             //获取父组件List的数据
             getListInfo(){
-                console.log(this.$route.params);
+                // console.log(this.$route.params);
                 this.typeId = parseInt(this.$route.params.id);
                 let data = this.$qs.stringify({
                     isFree:1,
@@ -58,7 +58,7 @@
                 });
                 this.$axios.post("/api/course/getListInfo",data).then((result) => {
                     result = result.data;
-                    console.log(result);
+                    // console.log(result);
                     data = result.result;
                     if(result.status == 200){
                         this.courseTypeList = data.courseTypeList;
