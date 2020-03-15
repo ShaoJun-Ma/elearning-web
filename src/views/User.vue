@@ -277,6 +277,7 @@
 
 <style scoped>
     .user{
+        min-width: 1400px;
         padding-top: 10px;
         background-color: #E9EEF3;
         color: #333;

@@ -2,11 +2,11 @@
     <div class="login">
         <el-form ref="form" :model="form" :rules="rules" label-width="80px">
             <el-form-item label="用户名" prop="username">
-                <el-input v-model="form.username" type="text" placeholder="请输入登录手机号/邮箱">
+                <el-input v-model="form.username" type="text" placeholder="请输入登录手机号/邮箱" clearable>
                 </el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
-                <el-input v-model="form.password" type="password"  placeholder="请输入密码">
+                <el-input v-model="form.password" type="password"  placeholder="请输入密码" clearable>
                 </el-input>
             </el-form-item>
             <div class="check-login">

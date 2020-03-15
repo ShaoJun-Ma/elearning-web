@@ -8,7 +8,7 @@
                 <ul class="items-ul">
                     <router-link tag="li" :to="{name:'List',params:{id:-1}}" class="item-link">免费课程</router-link>
                     <router-link tag="li" to="/courseList" class="item-link">实战课程</router-link>
-                    <router-link tag="li" to="/course/teacherGroup" class="item-link">加入讲师团</router-link>
+                    <li @click="handleTeacherGroup" class="item-link">{{li_tag}}</li>
                     <router-link tag="li" to="/courseList" class="item-link">猿问猿答</router-link>
                 </ul>
             </div>
@@ -65,11 +65,11 @@
             </div>
             <div class="header-bell">
                 <div v-if="message == 0" class="bell">
-                    <router-link tag="span" to="/" class="el-icon-bell">通知</router-link>
+                    <span class="el-icon-bell" @click="handleMessage">通知</span>
                 </div>
                 <div v-else class="bell">
                     <span class="message">{{message}}</span>
-                    <router-link tag="span" to="/" class="el-icon-bell">通知</router-link>
+                    <span class="el-icon-bell" @click="handleMessage">通知</span>
                 </div>
             </div>
         </div>
@@ -98,6 +98,7 @@
                 activeName:"",
                 hoverArea:true,
                 message:0,
+                li_tag:"加入讲师团",
             }
         },
         computed:{
@@ -141,13 +142,44 @@
                     }
                 });
 
+            },
+            //处理 加入讲师团
+            handleTeacherGroup(){
+                if(this.li_tag == "加入讲师团"){
+                    this.handleIsLogin("/course/teacherGroup");
+                }else{
+                    this.handleIsLogin("/course/addCourse");
+                }
+            },
+            //处理 通知
+            handleMessage(){
+                this.handleIsLogin("/user/message");
+            },
+            //未登录不能进入特定的页面
+            handleIsLogin(path){
+                if(this.$store.state.isLogin == 'true'){
+                    this.$router.push(path);
+                }else{
+                    this.$message({
+                        message:"请先进行登录！",
+                        type:"error",
+                    })
+                }
+            },
+            //处理 不同角色，显示的标签不同
+            handleLiTag(){
+                if(this.$store.state.userInfo.role == "老师"){
+                    this.li_tag = "创建课程";
+                }
             }
         },
         mounted(){
+            this.handleLiTag();
             if(this.$store.state.isLogin == null){
                 this.$store.commit("changeIsLogin","false");
                 this.$store.commit("changeUserInfo",{});
             }
+
         },
 
 

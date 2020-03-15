@@ -9,6 +9,7 @@ import User from "@/views/User";
 import Message from "@/views/Message";
 import TeacherGroup from "@/views/TeacherGroup";
 import AddCourse from "@/views/AddCourse";
+import MyCourse from "@/views/MyCourse";
 
 Vue.use(VueRouter);
 
@@ -69,6 +70,14 @@ const routes = [
         path:"/course/addCourse",
         name:"AddCourse",
         component:AddCourse,
+        meta:{
+            headerIndex:2
+        }
+    },
+    {
+        path:"/user/myCourse",
+        name:"MyCourse",
+        component:MyCourse,
     }
 
 

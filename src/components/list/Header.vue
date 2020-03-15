@@ -228,7 +228,7 @@
         color: white;
     }
     .on{
-        color: white;
+        color: white !important;
     }
     .header-search{
         width: 307px;

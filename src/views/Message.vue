@@ -49,6 +49,7 @@
     }
     .message-container{
         width: 1100px;
+        min-height: 680px;
         margin: 0 auto;
         padding: 20px;
     }
