@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="my-area">
                                     <ul>
-                                        <li class="el-icon-reading">我的课程</li>
+                                        <router-link tag="li" class="el-icon-reading" to="/user/myCourse">我的课程</router-link>
                                         <router-link tag="li" class="el-icon-setting" to="/user/userInfo">个人设置</router-link>
                                     </ul>
                                 </div>

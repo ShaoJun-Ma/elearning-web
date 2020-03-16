@@ -59,59 +59,6 @@
                                 </span>
                             <user-info></user-info>
                         </el-tab-pane>
-                        <!--我的课程-->
-<!--                        <el-tab-pane>-->
-<!--                            <span slot="label"><i class="el-icon-tickets"></i>我的课程</span>-->
-<!--                            <div class="my-course">-->
-<!--                                <div class="block">-->
-<!--                                    <el-timeline>-->
-<!--                                        <el-timeline-item timestamp="2018/4/18" placement="top">-->
-<!--                                            <el-card>-->
-<!--                                                <div class="course-card">-->
-<!--                                                    <div class="course-card-lef">-->
-<!--&lt;!&ndash;                                                        <img src="../static/img/home/m1.jpg"/>&ndash;&gt;-->
-<!--                                                    </div>-->
-<!--                                                    <div class="course-card-right">-->
-<!--                                                        <h3>初始Python</h3>-->
-<!--                                                        <p>-->
-<!--                                                            <span class="course-card-free">免费课程</span>-->
-<!--                                                            <span>学习至1.01 Python入门课程介绍</span>-->
-<!--                                                        </p>-->
-<!--                                                        <p>-->
-<!--                                                            <span style="color: red">已学20%</span>-->
-<!--                                                            <span>用时2小时</span>-->
-<!--                                                        </p>-->
-<!--                                                        <el-button type="danger" round>继续学习</el-button>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </el-card>-->
-<!--                                        </el-timeline-item>-->
-<!--                                        <el-timeline-item timestamp="2018/4/12" placement="top">-->
-<!--                                            <el-card>-->
-<!--                                                <div class="course-card">-->
-<!--                                                    <div class="course-card-lef">-->
-<!--&lt;!&ndash;                                                        <img src="../static/img/home/m1.jpg"/>&ndash;&gt;-->
-<!--                                                    </div>-->
-<!--                                                    <div class="course-card-right">-->
-<!--                                                        <h3>初始Python</h3>-->
-<!--                                                        <p>-->
-<!--                                                            <span class="course-card-free">免费课程</span>-->
-<!--                                                            <span>学习至1.01 Python入门课程介绍</span>-->
-<!--                                                        </p>-->
-<!--                                                        <p>-->
-<!--                                                            <span style="color: red">已学20%</span>-->
-<!--                                                            <span>用时2小时</span>-->
-<!--                                                        </p>-->
-<!--                                                        <el-button type="danger" round>继续学习</el-button>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </el-card>-->
-<!--                                        </el-timeline-item>-->
-<!--                                    </el-timeline>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </el-tab-pane>-->
-
                         <!--修改密码-->
 <!--                        <el-tab-pane>-->
 <!--                                <span slot="label">-->
