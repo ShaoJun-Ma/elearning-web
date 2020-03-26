@@ -10,6 +10,7 @@ import Message from "@/views/Message";
 import TeacherGroup from "@/views/TeacherGroup";
 import AddCourse from "@/views/AddCourse";
 import MyCourse from "@/views/MyCourse";
+import AddCourseDetail from "@/views/AddCourseDetail";
 
 Vue.use(VueRouter);
 
@@ -78,6 +79,11 @@ const routes = [
         path:"/user/myCourse",
         name:"MyCourse",
         component:MyCourse,
+    },
+    {
+        path:"/course/AddCourseDetail",
+        name:"AddCourseDetail",
+        component:AddCourseDetail,
     }
 
 

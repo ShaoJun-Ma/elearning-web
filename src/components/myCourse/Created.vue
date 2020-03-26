@@ -17,7 +17,8 @@
                                     类型：后端开发/Python
                                 </p>
                                 <div class="continue-button">
-                                    <el-button type="primary" round>完善课程</el-button>
+                                    <el-button type="danger" round class="continue" @click="addChapter">完善章节</el-button>
+                                    <el-button type="primary" round class="continue" @click="addCourseDetail">完善课程</el-button>
                                 </div>
                             </div>
                             <div class="clear"></div>
@@ -40,7 +41,8 @@
                                     类型：后端开发/Python
                                 </p>
                                 <div class="continue-button">
-                                    <el-button type="primary" round>完善课程</el-button>
+                                    <el-button type="danger" round class="continue" @click="addChapter">完善章节</el-button>
+                                    <el-button type="primary" round class="continue" @click="addCourseDetail">完善课程</el-button>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +55,15 @@
 
 <script>
     export default {
-        name: "Created"
+        name: "Created",
+        methods:{
+            addChapter(){
+                this.$router.push("/course/addChapter");
+            },
+            addCourseDetail(){
+                this.$router.push("/course/addCourseDetail");
+            }
+        }
     }
 </script>
 
@@ -108,5 +118,8 @@
     }
     .type{
         padding-top: 8px !important;
+    }
+    .continue{
+        margin-left: 10px;
     }
 </style>

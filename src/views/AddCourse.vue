@@ -11,29 +11,29 @@
                 <div class="course-container">
                     <div class="course-info">
                         <el-form ref="form" :model="form" label-width="80px">
-                            <el-form-item label="课程名称">
+                            <el-form-item label="课程名称:">
                                 <el-input v-model="form.name" clearable></el-input>
                             </el-form-item>
-                            <el-form-item label="课程难度">
+                            <el-form-item label="课程难度:">
                                 <el-radio-group v-model="form.rank">
                                     <el-radio label="初级"></el-radio>
                                     <el-radio label="中级"></el-radio>
                                     <el-radio label="高级"></el-radio>
                                 </el-radio-group>
                             </el-form-item>
-                            <el-form-item label="课程类型">
+                            <el-form-item label="课程类型:">
                                 <el-cascader :options="options" clearable></el-cascader>
                             </el-form-item>
-                            <el-form-item label="是否免费">
+                            <el-form-item label="是否免费:">
                                 <el-radio-group v-model="form.isFree">
                                     <el-radio label="免费"></el-radio>
                                     <el-radio label="付费"></el-radio>
                                 </el-radio-group>
                             </el-form-item>
-                            <el-form-item label="课程价格">
+                            <el-form-item label="课程价格:">
                                 <el-input v-model="form.price" clearable></el-input>
                             </el-form-item>
-                            <el-form-item label="封面图">
+                            <el-form-item label="封面图:">
                                 <el-upload
                                         class="upload-demo"
                                         action="https://jsonplaceholder.typicode.com/posts/"
@@ -43,7 +43,7 @@
                                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                                 </el-upload>
                             </el-form-item>
-                            <el-form-item label="课程描述">
+                            <el-form-item label="课程描述:">
                                 <el-input
                                         type="textarea"
                                         :rows="3"
@@ -59,7 +59,6 @@
                         </el-form>
                     </div>
                 </div>
-
             </div>
         </div>
         <list-footer></list-footer>
@@ -119,8 +118,10 @@
         border-bottom: 1px solid rgba(29, 33, 35, 0.2);
     }
     .add-set-logo{
+        width: 44px;
+        height: 35px;
         float: left;
-        margin: 14px;
+        margin: 14px 11px 8px 11px;
     }
     .add-set-title{
         float: left;
